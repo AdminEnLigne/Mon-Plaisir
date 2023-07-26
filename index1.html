@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site de Réclamation</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.6/dist/sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.6/dist/sweetalert2.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: url('content://com.android.chrome.FileProvider/images/screenshot/1690337898365895653668.jpg') no-repeat center;
+      background-size: cover;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header img {
+      width: 100px;
+    }
+
+    header h1 {
+      color: red;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 30px auto;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    label, input {
+      margin-bottom: 10px;
+      width: 70%; 
+    }
+  
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: 0.6;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Bienvenue sur notre site de réclamation</h1>
+  </header>
+
+   <main> 
+       <h2>Inscrivez-Vous</h2> 
+    <form action="#" method="post" onsubmit="displayMessage(); return false;">          
+        <label for="parrainage">Nom de parrainage (facultatif) :</label> <input type="text" id="parrainage" name="parrainage" required> 
+        <label for="username">Entrez votre nom :</label> <input type="text" id="username" name="username" required> <label for="walletAddress">Adresse TRC-20 faucetPay :</label> <input type="text" id="walletAddress" name="walletAddress" required> 
+        <button type="submit" class="submit-btn">Soumettre</button>
+    </form> 
+  </main>
+<script>
+    var userInfo = localStorage.getItem('userInfo'); if (userInfo) {
+    window.location.href = 'accueil.html'; }
+    function displayMessage() {
+      var name = document.getElementById('username').value;
+      var walletAddress = document.getElementById('walletAddress').value;
+      var parrainage = document.getElementById('parrainage').value;
+
+      if (name !== '' && walletAddress !== '') {
+        var message = `Inscription reussite`;
+        Swal.fire({
+          icon: 'success',
+          html: `<div style="text-align: center">${message}</div>`,
+          showConfirmButton: true,
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            var userInfo = {
+              parrainage: parrainage,
+              name: name,
+              walletAddress: walletAddress,
+              
+            };
+            localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+            // Redirect to accueil.html
+            window.location.href = 'accueil.html';
+          }
+        });
+      }
+    }
+  </script>
+</body>
+</html>

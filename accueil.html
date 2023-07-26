@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.6/dist/sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.6/dist/sweetalert2.min.css">
+  <title>Accueil - Site de Réclamation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: url('content://com.android.chrome.FileProvider/images/screenshot/1690338073718-1403232017.jpg') no-repeat center;
+      background-size: cover;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header img {
+      width: 100px;
+    }
+
+    header h1 {
+      color: red;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    div.info {
+      border: 5px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
+      margin: 10px;
+      background-color: #7fff83;
+    }
+    div.info {
+    text-align: center;
+    }
+     .section {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
+      margin: 10px;
+      background-color: #fff;
+    }
+    
+    .section h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .section p {
+      margin: 10px 0;
+      color: #666;
+    }
+
+    p {
+      position: relative;
+      padding-left: 20px; /* Ajustez l'espacement du gros point par rapport au paragraphe */
+    }
+
+   div.container p::before {
+      content: "●";
+      font-size: 20px;
+      position: absolute;
+      top: 5px;
+      left: 0;
+    }
+
+    .section a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .section a:hover {
+      text-decoration: underline;
+    }
+      .button2  {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: 0.6;
+    }
+
+    button2:hover {
+      background-color: #45a049;
+    }
+ .delete-button {
+      padding: 10px 20px;
+      background-color: red;
+      color: white;
+      border: 0.6;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: red;
+    }
+    .miner {
+  display: flex;
+  justify-content: center;
+}
+
+    
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Bienvenue sur notre site de réclamation</h1>
+    <button class="delete-button" onclick="deleteUser()"> <i class="fas fa-trash-alt"></i> Supprimer le compte </button>
+  </header>
+
+  <main>
+    <div class="info">
+      <h2>Profil unique</h2>
+      <h4>Solde du Compte:&nbsp;&nbsp;&nbsp;&nbsp;15,43$</h4>
+      <p>Invité par <span id="parrainage"></span></p>
+      <p>Votre nom: <span id="nomUtilisateur"></span></p>
+      <p>Votre adresse TRC-20: <span id="adresseWallet"></span></p>
+    </div>
+   <div class='miner'><button id="monBouton" class='button2'>
+          Retrait d'argent</button></div>
+  <div class="container">
+    <h1>Il y a 3 étapes d'accès</h1>
+    <section class="section">
+      <h2>Section 1</h2>
+      <p>Contenu de la section 1. Cliquez <a href="#onglet1">ici</a> pour ouvrir l'onglet 1.</p>
+      <p>Contenu de la section 1. Cliquez <a href="#onglet1">ici</a> pour ouvrir l'onglet 1.</p>
+      <p>Contenu de la section 1. Cliquez <a href="#onglet1">ici</a> pour ouvrir l'onglet 1.</p>
+    </section>
+
+    <section class="section">
+      <h2>Section 2</h2>
+      <p>Contenu de la section 2. Cliquez <a href="#onglet2">ici</a> pour ouvrir l'onglet 2.</p>
+      <p>Contenu de la section 1. Cliquez <a href="#onglet1">ici</a> pour ouvrir l'onglet 1.</p>
+      <p>Contenu de la section 1. Cliquez <a href="#onglet1">ici</a> pour ouvrir l'onglet 1.</p>
+    </section>
+
+    <section class="section">
+      <h2>Section 3</h2>
+      <p>Contenu de la section 3. Cliquez <a href="#onglet3">ici</a> pour ouvrir l'onglet 3.</p>
+      <p>Contenu de la section 1. Cliquez <a href="#onglet1">ici</a> pour ouvrir l'onglet 1.</p>
+      <p>Contenu de la section 1. Cliquez <a href="#onglet1">ici</a> pour ouvrir l'onglet 1.</p>
+    </section>
+  </div>
+  </main>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.6/dist/sweetalert2.min.js"></script>
+  <script>
+    var userInfo = localStorage.getItem('userInfo');
+    if (userInfo) {
+      userInfo = JSON.parse(userInfo);
+      document.getElementById('nomUtilisateur').textContent = userInfo.name;
+      document.getElementById('adresseWallet').textContent = userInfo.walletAddress;
+      document.getElementById('parrainage').textContent = userInfo.parrainage || 'Non spécifié';
+    } else {
+      // Si les informations de l'utilisateur n'existent pas, rediriger vers la page d'inscription (index.html)
+      window.location.href = 'index.html';
+    }
+
+    function deleteUser() {
+  Swal.fire({
+    icon: 'warning',
+    title: 'Supprimer le compte',
+    text: 'Voulez-vous vraiment supprimer votre compte ?',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Oui, supprimer',
+    cancelButtonText: 'Annuler'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Récupérer les informations de l'utilisateur du localStorage
+      var userInfo = JSON.parse(localStorage.getItem('userInfo'));
+      // Supprimer les informations de l'utilisateur
+      localStorage.removeItem('userInfo');
+      window.location.href = 'index.html';
+    }
+  });
+}
+
+const bouton = document.getElementById('monBouton');
+bouton.addEventListener('click', afficherMessage);
+
+function afficherMessage() {
+  // Récupérer les informations de l'utilisateur du localStorage
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+
+  // Vérifier si les informations de l'utilisateur existent dans le localStorage
+  if (userInfo && userInfo.name) {
+    // Obtenir le nom d'utilisateur à partir des informations récupérées
+    const nomUtilisateur = userInfo.name;
+    const adresseWallet = userInfo.walletAddress
+    // Message personnalisé avec le nom d'utilisateur
+    var message = `Cher ${nomUtilisateur}, vous devez terminer tout les tâches et inviter 15personnes pour avoir accès à la retrait.<br><br>
+NB: Si Vous invitez +10personnes, votre solde +0.1$ chaque personne invité.`;
+
+    Swal.fire({
+      icon: 'info',
+      html: `<div style="text-align: center">${message}</div>`,
+      title:'Cloud Mining CTD',
+      showConfirmButton: true,
+    });
+  } else {
+    // Si les informations de l'utilisateur n'existent pas, rediriger vers la page d'inscription (index.html)
+    window.location.href = 'index.html';
+  }
+}
+
+  </script>
+</body>
+</html>
