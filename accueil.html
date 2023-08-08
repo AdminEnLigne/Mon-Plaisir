@@ -3,52 +3,217 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Publications Facebook</title>
-  <!-- Inclure la bibliothèque Font Awesome pour les icônes -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .profile {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .profile-image {
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .button {
+      width: 150px;
+      height: 50px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease-in-out;
+      margin-bottom: 10px;
+    }
+
+    .button i {
+      margin-right: 10px;
+    }
+
+    .button:hover {
+      background-color: #2980b9;
+    }
+
+    h2.pub {
+      text-align: center;
+      color: #f51327;
+    }
+
+    div.conteneur {
+      margin: 20px;
+    }
+
+    .publication-image {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 10px auto;
+    }
+
+    .publication-section {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .publication-description {
+      overflow: hidden;
+      margin: 10px 0;
+      position: relative;
+    }
+
+    .read-more-button {
+      margin-top: 5px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+
+    footer {
+      text-align: center;
+      background-color: #f1f1f1;
+      padding: 10px 0;
+      width: 100%;
+    }
+
+    .social-icons {
+      margin-top: 10px;
+      font-size: 25px;
+    }
+
+    .social-icons a {
+      margin: 0 5px;
+    }
+  </style>
+  <title>Mon Profil</title>
 </head>
 <body>
-  <div id="facebook-feed"></div>
-
+  <div class="profile">
+    <img class="profile-image" src="https://i.postimg.cc/CL3tSXJD/20230710-165227.jpg" alt="Photo de profil">
+    <h2>RANDRIANASOLO Morlon</h2>
+    <div class="buttons">
+      <div class="button-container">
+        <button class="button" id="callButton"><i class="fas fa-phone"></i> Appeler</button>
+      </div>
+      <div class="button-container">
+        <button class="button" id="messageButton"><i class="far fa-envelope"></i> Envoyer un message</button>
+      </div>
+    </div>
+  </div>
+  <h2 class="pub">Mes Publications</h2>
+  <div class="conteneur" id="publications-container"></div>
+  <footer>
+    <p>&copy; 2023 by Morlon</p>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/profile.php?id=100093146487030"><i class="fab fa-facebook"></i></a>
+      <a href="https://instagram.com/morlonrnd?igshid=OGY3MTU3OGY1Mw==" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://t.me/Morlon06" target="_blank"><i class="fab fa-telegram"></i></a>
+      <a href="https://wa.me/qr/POHN4WQG3RXHJ1" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </footer>
   <script>
-    const appId = '6782702888441134';
-    const userToken = 'EABgY1RRIVS4BO8yoaX8jWMwcjm5xgbem7oM0VXU4I7BMSPTMmHzI8Geo1aCap9ZBS126jKLLNMmGu6RxvSLmixQ5rChoMwDxphZCQ3rmg1tF9kNKSndE9ae7zBrlTZC0pafhiYwn04QGLjVxZAywgK8VzwY8W6COUoQghXOTNTqu53WdwuPNMbRVCwZDZD';
-    const url = `https://graph.facebook.com/v12.0/me/posts?fields=message&access_token=${userToken}`;
-
-    // Fonction pour récupérer les données JSON de l'API
-    async function fetchData(url) {
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        console.error('Erreur lors de la récupération des données:', error);
-        return null;
-      }
-    }
-
-    // Fonction pour afficher les publications dans le DOM
-    function renderPosts(posts) {
-      const feedContainer = document.getElementById('facebook-feed');
-      if (!feedContainer) return;
-
-      posts.data.forEach(post => {
-        const postElement = document.createElement('div');
-        postElement.classList.add('facebook-post');
-        postElement.innerHTML = `
-          <p>${post.message}</p>
-        `;
-        feedContainer.appendChild(postElement);
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("callButton").addEventListener("click", function() {
+        window.location.href = "tel:0388448799";
       });
-    }
 
-    // Récupérez les publications et affichez-les
-    fetchData(url)
-      .then(data => {
-        if (data) {
-          renderPosts(data);
+      document.getElementById("messageButton").addEventListener("click", function() {
+        window.location.href = "mailto:morlonrnd@gmail.com";
+      });
+
+      const toggleDescription = function(element) {
+        const maxHeight = "3em";
+        if (element.style.maxHeight === maxHeight) {
+          element.style.maxHeight = "none";
+        } else {
+          element.style.maxHeight = maxHeight;
         }
+      };
+
+      document.querySelectorAll(".read-more-button").forEach(function(button) {
+        button.addEventListener("click", function() {
+          const description = this.parentNode.querySelector(".publication-description");
+          toggleDescription(description);
+        });
       });
+
+      document.querySelectorAll(".publication-description").forEach(function(description) {
+        description.addEventListener("click", function() {
+          toggleDescription(this);
+        });
+      });
+
+      fetch('https://graph.facebook.com/159648753816673/posts?fields=message,full_picture&access_token=EABgY1RRIVS4BO3B1io7mbxhIipiQOLTDp1D7ZCds1MEeej1LoprdnTa8d9N8oBsvVTGGzsSeoMuK7Rq4qIzhktNquVLdjJ4KaKvG0BVteRAKX97sNYQ5S7ItCm1Sok6gpCyTKXJdaw8AI6k0NQKMpm4T23z4256q5xSTIdZBYNhLExBgVMHI2TJxY2G4BdYPZAQ00fuvcIbDRQiiUXuFo0Idlv1hAnfHbARLAZDZD')
+        .then(response => response.json())
+        .then(data => {
+          const publicationsContainer = document.getElementById("publications-container");
+          data.data.forEach(post => {
+            const postSection = document.createElement("div");
+            postSection.classList.add("publication-section");
+
+            const postImage = document.createElement("img");
+            postImage.src = post.full_picture;
+            postImage.alt = "Image de publication";
+            postImage.classList.add("publication-image");
+
+            const postDescription = document.createElement("p");
+            postDescription.textContent = post.message;
+            postDescription.classList.add("publication-description");
+
+            if (postDescription.clientHeight > 2 * parseFloat(getComputedStyle(postDescription).lineHeight)) {
+              const readMoreButton = document.createElement("button");
+              readMoreButton.textContent = "Lire la suite";
+              readMoreButton.classList.add("read-more-button");
+
+              let isExpanded = false;
+              readMoreButton.addEventListener("click", function() {
+                if (isExpanded) {
+                  postDescription.style.maxHeight = "2em";
+                  readMoreButton.textContent = "Lire la suite";
+                } else {
+                  postDescription.style.maxHeight = "none";
+                  readMoreButton.textContent = "Réduire";
+                }
+                isExpanded = !isExpanded;
+              });
+
+              postSection.appendChild(postImage);
+              postSection.appendChild(postDescription);
+              postSection.appendChild(readMoreButton);
+            } else {
+              postSection.appendChild(postImage);
+              postSection.appendChild(postDescription);
+            }
+
+            publicationsContainer.appendChild(postSection);
+          });
+        })
+        .catch(error => {
+          console.error("Erreur API:", error);
+        });
+    });
   </script>
 </body>
 </html>
